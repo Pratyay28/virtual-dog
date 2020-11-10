@@ -1,57 +1,46 @@
-var ball,database,position;
+//Create variables here
+var dog,happyDog,database,foodS,foodStock;
 
-function setup(){
-    database=firebase.database();
-  //  console.log(database)
-    createCanvas(500,500);
-    ball = createSprite(250,250,10,10);
-    ball.shapeColor = "red";
-
-//reading from database
-var ballPosition=database.ref('ball/position');
-ballPosition.on("value",readPosition);
-
-
-
+function preload()
+{
+  //load images here
+ happyDog=loadImage("images/dogImg.png");
 }
 
-function draw(){
-    background("white");
-if(position!==undefined){
-
-
-
-
-    if(keyDown(LEFT_ARROW)){
-        writePosition(-1,0);
-    }
-    else if(keyDown(RIGHT_ARROW)){
-        writePosition(1,0);
-    }
-    else if(keyDown(UP_ARROW)){
-        writePosition(0,-1);
-    }
-    else if(keyDown(DOWN_ARROW)){
-        writePosition(0,+1);
-    }
-    drawSprites();
-}
+function setup() {
+  database=firebase.database();
+	createCanvas(500, 500);
+  
+  foodStock=database.ref('Food')
+  foodStock.on("value",readStock)
+  dog
 }
 
-function writePosition(x,y){
-database.ref('ball/position').set({
-    x:position.x+x,
-    y:position.y+y
-});
 
+function draw() {  
+background(46,139,87);
+if(keyWentDown(UP_ARROW)){
+writeStock(foodS);
+dog.addImage(happyDog)
+}
+  drawSprites();
+  //add styles here
 
 }
-function readPosition(data){
-//read data from database
-position=data.val();
-console.log(position);
-console.log(position.x);
-ball.x=position.x;
-ball.y=position.y;
-
+function readStock(data){
+  foodS=data.val();
 }
+
+function writeStock(x){
+  if(x<=0){
+    x=0;
+  }else{
+    x=x-1;
+  }
+database.ref('/').update({
+  food:x
+})
+}
+
+
+
