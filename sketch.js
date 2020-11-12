@@ -4,7 +4,8 @@ var dog,happyDog,database,foodS,foodStock;
 function preload()
 {
   //load images here
- happyDog=loadImage("images/dogImg.png");
+dogImg=loadImage("images/dogImg.png");
+ happyDog=loadImage("images/dogImg1.png");
 }
 
 function setup() {
@@ -13,7 +14,9 @@ function setup() {
   
   foodStock=database.ref('Food')
   foodStock.on("value",readStock)
-  dog
+  dog = createSprite(290,280,10,10);
+  dog.addImage(dogImg);
+  dog.scale=0.2;
 }
 
 
